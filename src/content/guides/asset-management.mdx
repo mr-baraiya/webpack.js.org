@@ -96,15 +96,19 @@ npm install --save-dev style-loader css-loader
  };
 ```
 
-Module loaders can be chained. Each loader in the chain applies transformations to the processed resource. A chain is executed in reverse order. The first loader passes its result (resource with applied transformations) to the next one, and so forth. Finally, webpack expects JavaScript to be returned by the last loader in the chain.
+Loaders in webpack are executed from **right to left** (i.e., from last to first in the `use` array).
 
-The above order of loaders should be maintained: [`'style-loader'`](/loaders/style-loader) should be listed before [`'css-loader'`](/loaders/css-loader) in the `use` array, but webpack applies them from right to left—so `'css-loader'` runs first, then `'style-loader'`. If this convention is not followed, webpack is likely to throw errors.
+For example:
 
-T> webpack uses a regular expression to determine which files it should look for and serve to a specific loader. In this case, any file that ends with `.css` will be served to the `style-loader` and the `css-loader`.
+```js
+use: ["postcss-loader", "sass-loader"];
+```
 
-This enables you to `import './style.css'` into the file that depends on that styling. Now, when that module is run, a `<style>` tag with the stringified css will be inserted into the `<head>` of your html file.
+Here, `css-loader` runs first and processes the CSS, followed by `style-loader`, which injects the result into the DOM.
 
-Let's try it out by adding a new `style.css` file to our project and import it in our `index.js`:
+So even though `style-loader` appears before `css-loader` in the array, the execution happens in reverse order.
+
+If this order is not maintained, webpack may throw errors.
 
 **project**
 
