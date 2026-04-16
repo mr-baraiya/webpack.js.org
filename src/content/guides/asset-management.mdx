@@ -96,19 +96,24 @@ npm install --save-dev style-loader css-loader
  };
 ```
 
-Loaders in webpack are executed from **right to left** (i.e., from last to first in the `use` array).
+Module loaders can be chained. Each loader in the chain applies transformations to the processed resource. A chain is executed in reverse order (right to left).
 
-For example:
+For example, given the following rule:
 
 ```js
-use: ['postcss-loader', 'sass-loader'],
+export default {
+  module: {
+    rules: [
+      {
+        test: /\.scss$/i,
+        use: ["postcss-loader", "sass-loader"],
+      },
+    ],
+  },
+};
 ```
 
-In this rule, `test: /\.css$/i` is a regular expression that tells webpack to apply the rule to `.css` files.
-
-Here, `sass-loader` runs first and compiles Sass into CSS, followed by `postcss-loader`, which applies further transformations.
-
-So even though `postcss-loader` appears before `sass-loader` in the array, the execution happens in reverse order.
+Even though `postcss-loader` appears before `sass-loader` in the `use` array, webpack runs `sass-loader` first (compiling Sass into CSS), then runs `postcss-loader` on the result.
 
 If this order is not maintained, webpack may throw errors.
 
