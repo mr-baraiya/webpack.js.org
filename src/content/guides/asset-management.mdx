@@ -104,9 +104,9 @@ For example:
 use: ["postcss-loader", "sass-loader"];
 ```
 
-Here, `css-loader` runs first and processes the CSS, followed by `style-loader`, which injects the result into the DOM.
+Here, `sass-loader` runs first and compiles Sass into CSS, followed by `postcss-loader`, which applies further transformations.
 
-So even though `style-loader` appears before `css-loader` in the array, the execution happens in reverse order.
+So even though `postcss-loader` appears before `sass-loader` in the array, the execution happens in reverse order.
 
 If this order is not maintained, webpack may throw errors.
 
