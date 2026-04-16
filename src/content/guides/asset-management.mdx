@@ -101,8 +101,10 @@ Loaders in webpack are executed from **right to left** (i.e., from last to first
 For example:
 
 ```js
-use: ["postcss-loader", "sass-loader"];
+use: ['postcss-loader', 'sass-loader'],
 ```
+
+In this rule, `test: /\.css$/i` is a regular expression that tells webpack to apply the rule to `.css` files.
 
 Here, `sass-loader` runs first and compiles Sass into CSS, followed by `postcss-loader`, which applies further transformations.
 
